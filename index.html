@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App - Node and Sockets</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Chat Room</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3" id="users">
+                <h4>Connected Users</h4>
+                <!-- Users will go in here! -->
+            </div>
+
+            <div id="messages" class="col-sm-6">
+
+            </div>
+
+            <div class="col-sm-12 text-center">
+                <form id="submit-message">
+                    <input type="text" id="new-message" />
+                    <button type="submit" id="send-message" class="btn btn-primary">
+                        <!-- Click to send message to server -->
+                        Send!
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- <script type="text/javascript" src="/socket.io/socket.io.js"></script> -->
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+
+<script type="text/javascript">
+
+    // alert("Test")
+    console.log("Browser JavaScript");
+    var name = prompt("What is your name?");
+    // io here has no idea the other io exists (the one on the server)
+    // console.log(io);
+    // console.log(window.io);
+    var socketio = io.connect('http://127.0.0.1:8080');
+    // Send an event to the server
+    socketio.emit('nameToServer',name);
+
+    var userArray = [];
+
+    socketio.on('newUser',(userName)=>{
+        // console.log(userName + " just joined!");
+        var usersDiv = document.getElementById('users');
+        users.innerHTML += `<div class="col-sm-12">${userName}</div>`;
+        $('#messages').append("<b><em>" + userName + "</em> signed in.</b><br>");
+    });
+
+    $('#submit-message').submit(function(event){
+        event.preventDefault();
+        var newMessage = $('#new-message').val();
+        socketio.emit('messageToServer',{
+            newMessage:newMessage,
+            name:name
+        });
+        $('#new-message').val('');
+    });
+
+    socketio.on('messageToClient',(message)=>{
+        $('#messages').append('<p>'+message+'</p>');
+    });
+
+    // $('#send-message').click(function(){
+    //     socketio.emit('sendMessage');
+    // });
+
+</script>
+
+</body>
+</html>
