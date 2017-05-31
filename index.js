@@ -29,8 +29,19 @@ var server = http.createServer((req, res)=>{
                 res.end(data);
             }
         });
+    }else if(req.url == '/config.js'){
+        fs.readFile('config.js', 'utf-8',(error,data)=>{
+            if(error){
+                res.writeHead(500,{'content-type':'text/html'});
+                res.end('Internal Server Error');
+            }else{
+                res.writeHead(200,{'content-type':'text/javascript'});
+                res.end(data);
+            }
+        });
     }else{
-        // 404
+        res.writeHead(404,{'content-type':'text/html'});
+        res.end('<h1>This page does not exist</h1>');
     }
 });
 
@@ -39,6 +50,7 @@ var io = socketio.listen(server);
 io.sockets.on('connect',(socket)=>{
     console.log("Someone connected via socket!");
     // console.log(socket);
+    // io.sockets.emit('sendUserArray',users);
 
     socket.on('nameToServer',(name)=>{
         // console.log(name + " just joined.");
