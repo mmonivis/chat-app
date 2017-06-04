@@ -2,10 +2,12 @@
     height: 50vh;
     border: 1px solid black;
     overflow: scroll;
+    font-size: 18px;
 }
 
 body{
 	background: url('https://webdesignerdepot.s3.amazonaws.com/default-images/4.jpg') no-repeat center;
+	font-family: 'Bubbler One', sans-serif;
 }
 
 .header, #users, #messages{
@@ -13,8 +15,13 @@ body{
 	border: 1px black solid;
 }
 
+h1{
+	font-size: 40px;
+}
+
 #users{
 	height: 50vh;
+	font-size: 20px;
 }
 
 #new-message{
@@ -23,4 +30,8 @@ body{
 
 .header{
 	margin-top: 20px;
+}
+
+#messages{
+	padding: 10px;
 }
