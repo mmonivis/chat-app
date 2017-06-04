@@ -3,3 +3,24 @@
     border: 1px solid black;
     overflow: scroll;
 }
+
+body{
+	background: url('https://webdesignerdepot.s3.amazonaws.com/default-images/4.jpg') no-repeat center;
+}
+
+.header, #users, #messages{
+	background: white;
+	border: 1px black solid;
+}
+
+#users{
+	height: 50vh;
+}
+
+#new-message{
+	width: 30%;
+}
+
+.header{
+	margin-top: 20px;
+}
